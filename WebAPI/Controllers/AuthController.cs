@@ -2,6 +2,9 @@ using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Application.Common.DTOs;
+using Application.Common.Interfaces;
+
+
 
 namespace WebAPI.Controllers;
 
@@ -10,9 +13,13 @@ namespace WebAPI.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly UserManager<User> _userManager;
-    public AuthController(UserManager<User> userManager)
+    private readonly IConfiguration _configuration;
+    private readonly ITokenService _tokenService;
+    public AuthController(UserManager<User> userManager, IConfiguration configuration, ITokenService tokenService)
     {
         _userManager = userManager;
+        _configuration = configuration;
+        _tokenService = tokenService;
     }
 
     [HttpPost("register")]
@@ -36,7 +43,17 @@ public class AuthController : ControllerBase
         {
             return BadRequest(result.Errors);
         }
+    }
 
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginDto model)
+    {
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+        {
+            var token = _tokenService.CreateToken(user);
+            return Ok(new { token });
+        }
+        return Unauthorized("Invalid email or password");
     }
-    
-    }
+}
