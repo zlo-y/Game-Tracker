@@ -1,82 +1,49 @@
-Game-Tracker 🎮
+```markdown
+# Game-Tracker 🎮
 
-Game-Tracker — это высокопроизводительное backend-приложение на базе .NET, созданное для точного мониторинга игрового времени и фиксации этапов прохождения игр.
+[Read in English](README.md)
 
-Проект построен с соблюдением принципов Clean Architecture и разделением ответственности через CQRS, что обеспечивает легкую масштабируемость и поддержку кода.
-🏗 Архитектура и технологии
+**Game-Tracker** — это бэкенд-сервис на .NET 8, созданный для удобного мониторинга игрового времени и фиксации этапов прохождения игр (поинтов).
 
-Проект реализован с использованием современных подходов к разработке на стеке .NET:
+Проект реализован с использованием **Clean Architecture** и паттерна **CQRS**, что делает код чистым, поддерживаемым и готовым к масштабированию.
 
-    Core: .NET 8 / ASP.NET Core
+---
 
-    Patterns: CQRS (Command Query Responsibility Segregation)
+## 🏗 Архитектура и Стек
 
-    Library: MediatR (включая Pipeline Behaviors для обработки сквозной логики)
+* **Платформа:** .NET 8 / ASP.NET Core
+* **Паттерны:** CQRS (MediatR), Clean Architecture
+* **Валидация:** FluentValidation (интегрирована в Pipeline MediatR)
+* **База данных:** PostgreSQL + Entity Framework Core
+* **Инфраструктура:** Docker & Docker Compose
+* **Обработка ошибок:** Кастомный Middleware для глобального отлова исключений
 
-    Validation: FluentValidation (интегрирована в пайплайн MediatR)
+---
 
-    ORM: Entity Framework Core
+## 🛠 Реализованный функционал
 
-    Database: PostgreSQL (основная БД)
+- **CRUD для Игр:** Полное управление списком игр.
+- **Трекинг времени:** Возможность записывать сессии и фиксировать время прохождения определенных этапов.
+- **Global Exception Handling:** Middleware автоматически ловит ошибки валидации и возвращает понятные ответы.
+- **Pipeline Behaviors:** Автоматическая проверка данных перед выполнением бизнес-логики.
 
-    Containerization: Docker & Docker Compose
+---
 
-    Auth: JWT-based Authentication (в процессе интеграции)
+## 📈 План развития
 
-🛠 Реализованный функционал
-Core API (CRUD)
+- [ ] Запушить модуль **Auth** (регистрация и логин через JWT).
+- [ ] Добавить **Redis** для кэширования и снижения нагрузки на БД.
+- [ ] Разработать Frontend часть.
 
-Полностью реализованы операции (Create, Read, Update, Delete) для ключевых сущностей:
+---
 
-    Games: Управление списком игр в библиотеке пользователя.
+## 🚀 Как запустить
 
-    Game Time: Трекинг игровых сессий и фиксация «поинтов» (времени прохождения).
+1.  Убедитесь, что у вас установлен Docker и .NET 8 SDK.
+2.  Запустите контейнер с базой данных: `docker-compose up -d`.
+3.  Примените миграции: `dotnet ef database update`.
+4.  Запустите проект: `dotnet run`.
 
-Infrastructure & Patterns
-
-    Clean Architecture: Четкое разделение на слои (Domain, Application, Infrastructure, API).
-
-    CQRS via MediatR: Команды на изменение данных и запросы на чтение разделены для чистоты кода.
-
-    Pipeline Behaviors: Реализована автоматическая валидация входящих запросов перед выполнением хендлеров.
-
-    Database: Настроена контейнеризация PostgreSQL через Docker для быстрого развертывания окружения.
-
-🚀 Быстрый старт
-
-    Клонирование и подготовка:
-    Bash
-
-    git clone https://github.com/your-username/game-tracker.git
-    cd game-tracker
-
-    Запуск инфраструктуры (PostgreSQL):
-    Bash
-
-    docker-compose up -d
-
-    Обновление базы данных:
-    Bash
-
-    dotnet ef database update --project YourProject.Infrastructure --startup-project YourProject.API
-
-    Запуск:
-    Bash
-
-    dotnet run --project YourProject.API
-
-📈 В планах (Roadmap)
-
-    [x] Реализация CRUD и базовой логики трекинга.
-
-    [x] Внедрение CQRS и MediatR Pipeline.
-
-    [ ] Auth Service: Пуш системы регистрации и авторизации в основной репозиторий.
-
-    [ ] Redis: Внедрение кэширования для оптимизации нагрузки на PostgreSQL.
-
-    [ ] UI: Разработка фронтенд-части.
-
-⚙️ Статус разработки
+Статус разработки
 
 Проект находится в стадии активного наполнения функционалом. В ближайшее время ожидается обновление с системой аутентификации.
