@@ -44,7 +44,7 @@ The application uses a custom request pipeline to ensure reliability:
     }
   ]
 }
-
+```
 🛠 Features Implemented
 
     [x] Game Management: Full CRUD operations for the game library.
