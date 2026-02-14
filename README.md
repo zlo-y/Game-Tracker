@@ -1,68 +1,85 @@
 # Game-Tracker 🎮
 
-[Read in Russian | Читать на русском](README.ru.md)
+[Читать на русском](README.ru.md)
+
+**Game-Tracker** is a professional-grade backend service built with .NET 8, designed to help gamers track their time spent in-game and mark specific milestones (time points) for completion analysis.
+
+The project is a demonstration of **Clean Architecture** and modern design patterns, ensuring the code is decoupled, testable, and scalable.
+
+
 
 ---
 
-**Game-Tracker** is a high-performance .NET-based backend application designed for precise gaming time monitoring and milestone tracking. 
-
-Built with **Clean Architecture** principles and **CQRS**, the project ensures high maintainability, scalability, and clear separation of concerns.
-
 ## 🏗 Architecture & Technologies
 
-The project follows modern software engineering patterns within the .NET ecosystem:
+* **Core Framework:** .NET 8 / ASP.NET Core
+* **Architectural Pattern:** Clean Architecture (Domain, Application, Infrastructure, API)
+* **Design Pattern:** CQRS via **MediatR**
+* **Validation:** **FluentValidation** integrated into the MediatR Pipeline
+* **Database:** **PostgreSQL** with Entity Framework Core
+* **Infrastructure:** **Docker & Docker Compose** for seamless deployment
+* **Security:** Global Exception Handling Middleware & JWT Auth (In Progress)
 
-* **Core:** .NET 8 / ASP.NET Core
-* **Design Patterns:** CQRS (Command Query Responsibility Segregation)
-* **Messaging:** MediatR (including Pipeline Behaviors for cross-cutting concerns)
-* **Validation:** FluentValidation (integrated into the MediatR pipeline)
-* **ORM:** Entity Framework Core
-* **Database:** PostgreSQL (Primary storage)
-* **Containerization:** Docker & Docker Compose
-* **Auth:** JWT-based Authentication (In progress)
+---
 
-## 🛠 Features Implemented
+## 🛡 Request Pipeline & Middleware
 
-### **Core API (CRUD)**
-Fully functional RESTful endpoints for:
-* **Games:** Comprehensive management of the user's game library.
-* **Game Time:** Precise tracking of gaming sessions and "Time Points" (milestones for completion).
+The application uses a custom request pipeline to ensure reliability:
 
-### **Infrastructure & Patterns**
-* **Clean Architecture:** Strict separation into Domain, Application, Infrastructure, and API layers.
-* **CQRS via MediatR:** Decoupled commands and queries for cleaner, more testable code.
-* **Pipeline Behaviors:** Automated request validation and logging handled globally before reaching the handlers.
-* **Containerized DB:** Pre-configured PostgreSQL environment using Docker for "one-click" setup.
+1.  **Global Exception Middleware:** Intercepts all application errors. It specifically handles `ValidationException`, returning a structured JSON response to the client.
+2.  **MediatR Pipeline Behaviors:** Automatically validates every Command/Query before it reaches the logic handler.
 
-## 🚀 Quick Start
 
-1.  **Clone the repository:**
-    ```bash
+
+### Structured Error Response Example:
+```json
+{
+  "statusCode": 400,
+  "title": "Validation Error",
+  "message": "One or more parameters failed the check.",
+  "errors": [
+    {
+      "field": "GameTitle",
+      "error": "'GameTitle' must not be empty."
+    }
+  ]
+}
+
+🛠 Features Implemented
+
+    [x] Game Management: Full CRUD operations for the game library.
+
+    [x] Time Tracking: CRUD for gaming sessions and milestone "time points".
+
+    [x] CQRS Implementation: Complete separation of read and write operations.
+
+    [x] Automatic Validation: No manual validation in controllers.
+
+    [ ] Auth Service: Registration & Login system (JWT) - Coming soon.
+
+    [ ] Redis Integration: Planned for high-speed caching.
+
+🚀 Getting Started
+
+    Clone the repo:
+    Bash
+
     git clone [https://github.com/your-username/game-tracker.git](https://github.com/your-username/game-tracker.git)
-    cd game-tracker
-    ```
 
-2.  **Spin up the infrastructure:**
-    ```bash
+    Start PostgreSQL via Docker:
+    Bash
+
     docker-compose up -d
-    ```
 
-3.  **Apply migrations:**
-    ```bash
-    dotnet ef database update --project YourProject.Infrastructure --startup-project YourProject.API
-    ```
+    Update Database:
+    Bash
 
-4.  **Run the application:**
-    ```bash
-    dotnet run --project YourProject.API
-    ```
+    dotnet ef database update
 
-## 📈 Roadmap
-- [x] CRUD operations & core tracking logic.
-- [x] CQRS & MediatR Pipeline integration.
-- [ ] **Auth Service:** Push Registration & Login system to the main branch.
-- [ ] **Redis:** Implement caching to reduce PostgreSQL load.
-- [ ] **Frontend:** Develop a dashboard for data visualization.
+    Run:
+    Bash
+
+    dotnet run --project WebAPI
 
 ---
 *Note: This project is under active development. Expect breaking changes and frequent updates.*
