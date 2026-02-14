@@ -16,5 +16,8 @@ public class AddGameValidator : AbstractValidator<AddGameCommand>
         RuleFor(x => x.Genre)
         .NotEmpty().WithMessage("Genre is required.")
         .MaximumLength(100).WithMessage("Genre cannot exceed 100 characters.");
+
+        RuleFor(x => x.UserId)
+        .NotEmpty().WithMessage("UserId is required.");
     }
 }

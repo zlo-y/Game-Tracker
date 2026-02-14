@@ -58,30 +58,5 @@ public class ExceptionHandlerMiddleware
              await context.Response.WriteAsJsonAsync(response);
         }
     }
-
-
-// 
-/// Метод для формирования и отправки унифицированного ответа в формате JSON.
-// 
-    private static Task HandleExceptionAsync(HttpContext context, Exception exception)
-    {
-         var code = HttpStatusCode.InternalServerError;
-         object result = new {error = "Произошла ошибка на сервере."};
-
-         if(exception is ValidationException validationException)
-         {
-            code = HttpStatusCode.BadRequest;
-            result = new
-            {
-                message = "Ошибка валидации данных",
-                errors = validationException.Errors.Select(f => f.ErrorMessage)
-            };
-         }  
-
-         context.Response.ContentType = "application/json";
-         context.Response.StatusCode = (int)code;
-
-            return context.Response.WriteAsync(JsonSerializer.Serialize(result));
-    }
    
 }

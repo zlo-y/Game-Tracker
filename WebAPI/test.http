@@ -1,0 +1,35 @@
+Settings: 
+@no-cookie-jar
+@no-log
+# Отключает проверку SSL сертификата
+Request-Options: { "rejectUnauthorized": false }
+
+@hostname = localhost
+@port = 5023
+@host = http://{{hostname}}:{{port}}
+@contentType = application/json
+
+### 1. Регистрация нового пользователя
+POST {{host}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+    "username": "kratos",
+    "email": "kratos@godofwar.com",
+    "password": "Password123!"
+}
+
+### 2. Логин (Вход)
+# После выполнения этого запроса скопируй токен из ответа
+POST {{host}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+    "email": "kratos@godofwar.com",
+    "password": "Password123"
+}
+
+### 3. Тест защищенного метода (Замени {token} на скопированный)
+GET http://localhost:5023/api/games
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIwMTljM2Q4Mi03MTkxLTc5N2QtYTM0MC0yNzA2YjMyOThkZDgiLCJlbWFpbCI6ImtyYXRvc0Bnb2RvZndhci5jb20iLCJEaXNwbGF5TmFtZSI6InRlc3QiLCJuYmYiOjE3NzA1NTg2NDcsImV4cCI6MTc3MTE2MzQ0NywiaWF0IjoxNzcwNTU4NjQ3LCJpc3MiOiJHYW1lVHJhY2tlclNlcnZlciIsImF1ZCI6IkdhbWVUcmFja2VyQ2xpZW50In0.t8pU0I3x8yDdgg9SEHQe5irI1RsuaKaQTE9HhiCdyJ2COCKYK7UJcxOCDMoiVelsMWi1UVTf1PSbmmohMRp8pw
+

@@ -1,11 +1,11 @@
 using MediatR;
 using Domain;
 using Application.Common.Interfaces;
+using Application.Activities.Commands;
 
 
 namespace Application.Activities.Commands;
 
-public record CreateActivityCommand(string Name): IRequest<Guid>;
 
 // Эта штука — просто почтальон. В ней нет логики, только данные от юзера.
 public class ActivityHandler : IRequestHandler<CreateActivityCommand , Guid>

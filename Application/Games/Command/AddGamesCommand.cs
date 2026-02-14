@@ -6,7 +6,7 @@ using Application.Common.Interfaces;
 
 namespace Application.Games.Commands;
 
-public record AddGameCommand(string Title , string Genre) : IRequest<Guid>;
+public record AddGameCommand(string Title , string Genre, Guid UserId) : IRequest<Guid>;
 
 public class AddGameHandler : IRequestHandler<AddGameCommand, Guid>
 {
@@ -26,8 +26,10 @@ public class AddGameHandler : IRequestHandler<AddGameCommand, Guid>
         
         var game = new Domain.Game
         {
+            Id = Guid.NewGuid(),
             Title = requst.Title,
             Genre = requst.Genre,
+            UserId = requst.UserId,
             AddedAt = DateTime.UtcNow
         };
 

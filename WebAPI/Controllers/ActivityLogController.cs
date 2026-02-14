@@ -1,13 +1,14 @@
-using Application.Activities.Commands;
-using Domain;
-using Infrastructure;
+using Application.Activities.Commands   ;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
+
 
 
 namespace WebAPI.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ActivityLogController : ControllerBase
@@ -21,16 +22,27 @@ public class ActivityLogController : ControllerBase
         _mediator = mediator;
     }
 
+
+
     [HttpPost("start")]
-    public async Task<ActionResult<Guid>> StartActivity([FromBody] string activityName)
-    {
-// 
-// Просто перекладываем ответственность на Mediator. 
-// Если логика создания изменится, мы поменяем Handler, а этот метод не тронем.
-// 
+public async Task<ActionResult<Guid>> StartActivity([FromBody] StartActivityRequest request)
+{
 
-       var resultId = await _mediator.Send(new CreateActivityCommand(activityName));
+    var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    
 
-       return Ok(resultId);
-    }
+    if (string.IsNullOrEmpty(userIdClaim)) 
+        return Unauthorized("Не удалось определить пользователя");
+
+    var userId = Guid.Parse(userIdClaim);
+
+    var resultId = await _mediator.Send(new CreateActivityCommand(
+        request.ActivityName, 
+        request.GameId, 
+        userId));
+
+    return Ok(resultId);
+}
+
+
 }

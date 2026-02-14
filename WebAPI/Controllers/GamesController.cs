@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using Application.Games.Delete;
 using Application.Games.Put;
 using WebAPI.Controllers.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers;
 
@@ -15,6 +16,7 @@ namespace WebAPI.Controllers;
 // Контроллер для WebAPI~
 // 
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class GamesController : ControllerBase{
@@ -39,7 +41,12 @@ public class GamesController : ControllerBase{
     [HttpPost]
     public async Task<ActionResult<Guid>> AddGame ([FromBody] AddGameRequest request) 
     {
-        var id = await _mediator.Send(new AddGameCommand(request.Title , request.Genre));
+
+        var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (userIdClaim == null) return Unauthorized();
+        var userId = Guid.Parse(userIdClaim);
+
+        var id = await _mediator.Send(new AddGameCommand(request.Title , request.Genre, userId));
         return Ok(id);
     }
 

@@ -1,0 +1,1 @@
+public record StartActivityRequest(string ActivityName, Guid GameId);

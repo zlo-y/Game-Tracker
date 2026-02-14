@@ -8,6 +8,11 @@ using Application.Common.Interfaces;
 
 namespace WebAPI.Controllers;
 
+
+
+// 
+// Контроллер для аутентификации и регистрации пользователей!
+// 
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
@@ -22,6 +27,9 @@ public class AuthController : ControllerBase
         _tokenService = tokenService;
     }
 
+// 
+// Контроллер для регистрации пользователя!
+// 
     [HttpPost("register")]
     public async Task<ActionResult> Register([FromBody] RegisterDto request)
     {
@@ -44,6 +52,10 @@ public class AuthController : ControllerBase
             return BadRequest(result.Errors);
         }
     }
+
+// 
+// Контроллер для входа в систему!
+// 
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto model)
