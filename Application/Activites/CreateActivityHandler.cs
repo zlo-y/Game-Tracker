@@ -1,20 +1,21 @@
 using MediatR;
 using Application.Common.Interfaces;
 using Domain;
-using Application.Activities.Commands;
-
-
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Application.Activities.Commands;
 
-
-
+// 
+// Обработчик для создания новой активности пользователя
+// 
 public class CreateActivityHandler : IRequestHandler<CreateActivityCommand, Guid>
 {
     private readonly IApplicationDbContext _context;
-    public CreateActivityHandler(IApplicationDbContext context)
+    private readonly ICurrentUserService _currentUserService;
+    public CreateActivityHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
     {
         _context = context;
+        _currentUserService = currentUserService;
     }
 
     public async Task<Guid> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
@@ -25,7 +26,7 @@ public class CreateActivityHandler : IRequestHandler<CreateActivityCommand, Guid
         ActivityName = request.Name,
         StartTime = DateTime.UtcNow,
         GameId = request.GameId,
-        UserId = request.UserId
+        UserId = _currentUserService.UserId // Получаем UserId из текущего пользователя
     };
 
     _context.ActivityLogs.Add(activity);

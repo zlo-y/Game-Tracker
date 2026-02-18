@@ -1,7 +1,7 @@
 using MediatR;
 using Domain;
 using Application.Common.Interfaces;
-using Application.Activities.Commands;
+
 
 
 namespace Application.Activities.Commands;
@@ -23,7 +23,9 @@ public class ActivityHandler : IRequestHandler<CreateActivityCommand , Guid>
         var activity = new ActivityLog
         {
             ActivityName = request.Name,
-            StartTime = DateTime.Now
+            StartTime = DateTime.UtcNow,
+            UserId = request.UserId, 
+            GameId = request.GameId
         };
 // Закидываем в очередь на добавление
         _context.ActivityLogs.Add(activity);

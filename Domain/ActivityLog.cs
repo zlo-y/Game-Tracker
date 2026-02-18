@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Domain;
 
 // 
@@ -14,7 +16,9 @@ public class ActivityLog
 // Связь с пользователем и игрой!
 // 
     public Guid UserId { get; set; }
+    public User User { get; set; } = null!;
     public Guid? GameId { get; set; } 
+    public Game? Game { get; set; }
 
     public double DurationMinutes => EndTime.HasValue
     ? (EndTime.Value - StartTime).TotalMinutes

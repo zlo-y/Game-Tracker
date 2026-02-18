@@ -3,7 +3,7 @@ using Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using System.Reflection.Emit;
+using System.Reflection;
 
 namespace Infrastructure;
 
@@ -23,18 +23,33 @@ public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid> , 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Game>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Title).IsRequired();
-            entity.Property(e => e.Genre).IsRequired();
-            entity.HasOne(e => e.User)
-                .WithMany(u => u.Games)
-                .HasForeignKey(e => e.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-        
-        modelBuilder.Entity<ActivityLog>().HasKey(e => e.Id);
+     modelBuilder.Entity<Game>(entity =>
+    {
+        entity.HasKey(e => e.Id);
+        entity.Property(e => e.Title).IsRequired();
+        entity.Property(e => e.Genre).IsRequired();
+
+        entity.HasOne(e => e.User)
+            .WithMany(u => u.Games)
+            .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+    });
+
+    // Конфигурация Логов 
+modelBuilder.Entity<ActivityLog>(entity =>
+{
+    entity.HasKey(e => e.Id);
+
+    entity.HasOne(e => e.User)
+        .WithMany(u => u.ActivityLogs) 
+        .HasForeignKey(e => e.UserId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+    entity.HasOne(e => e.Game)
+        .WithMany()
+        .HasForeignKey(e => e.GameId)
+        .OnDelete(DeleteBehavior.SetNull);
+});
         
     }
 
