@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Activites.Command;
 
+
+// 
+// Обработчик для получения статистики по играм пользователя 
+// 
 public class GetGamesStatsHandler : IRequestHandler<GetGameStatsQuery, IEnumerable<GameStatsDto>>
 {
     private readonly IApplicationDbContext _context;

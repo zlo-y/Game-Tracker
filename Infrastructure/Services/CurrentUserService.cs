@@ -1,5 +1,9 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Application.Common.Interfaces;
+
+// 
+// Сервис для получения информации о текущем пользователе из контекста HTTP-запроса,используется для извлечения UserId из JWT-токена.
+// 
 public class CurrentUserService : ICurrentUserService
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
@@ -13,8 +17,11 @@ public class CurrentUserService : ICurrentUserService
     {
         get
         {
-            var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("sub")?.Value;
-            return userIdClaim != null ? Guid.Parse(userIdClaim) : Guid.Empty;
+            var id = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            return id != null ? Guid.Parse(id) : Guid.Empty;
+            
         }
     }
+
+
 }

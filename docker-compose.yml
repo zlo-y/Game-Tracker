@@ -2,6 +2,7 @@
 services:
   db:
     image: postgres:latest
+    container_name: tracker_db
     restart: always
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -9,6 +10,23 @@ services:
       POSTGRES_DB: ${DB_NAME}
     ports:
       - "${DB_PORT}:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tracker_api
+    depends_on:
+      - db  
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD}
+      - JWT_KEY=${JWT_KEY}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_AUDIENCE=${JWT_AUDIENCE}
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8080:8080"
 
 volumes:
   db_data:

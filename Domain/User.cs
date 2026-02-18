@@ -18,7 +18,9 @@ namespace Domain
         public DateTime CreatedAt { get; set;  } = DateTime.UtcNow;
         public string Bio { get; set; } = string.Empty;
 
-
+// 
+// Игры пользователя
+// 
     public virtual ICollection<Game> Games { get; set; } = new List<Game>();
     public virtual ICollection<ActivityLog> ActivityLogs { get; set; } = new List<ActivityLog>();
 
