@@ -2,7 +2,7 @@
 
 [Читать на русском](README.ru.md)
 
-**Game-Tracker** is a professional-grade backend service built with .NET 8, designed to help gamers track their time spent in-game and mark specific milestones (time points) for completion analysis.
+**Game-Tracker** is a professional-grade backend service built with .NET 10, designed to help gamers track their time spent in-game and mark specific milestones (time points) for completion analysis.
 
 The project is a demonstration of **Clean Architecture** and modern design patterns, ensuring the code is decoupled, testable, and scalable.
 
