@@ -2,7 +2,7 @@
 
 [Читать на русском](README.ru.md)
 
-**Game-Tracker** is a professional-grade backend service built with .NET 8, designed to help gamers track their time spent in-game and mark specific milestones (time points) for completion analysis.
+**Game-Tracker** is a professional-grade backend service built with .NET 10, designed to help gamers track their time spent in-game and mark specific milestones (time points) for completion analysis.
 
 The project is a demonstration of **Clean Architecture** and modern design patterns, ensuring the code is decoupled, testable, and scalable.
 
@@ -54,32 +54,41 @@ The application uses a custom request pipeline to ensure reliability:
     [x] CQRS Implementation: Complete separation of read and write operations.
 
     [x] Automatic Validation: No manual validation in controllers.
-
-    [ ] Auth Service: Registration & Login system (JWT) - Coming soon.
+    
+    [x] **Auth Service**: Registration & Login system (Identity + JWT).
+    
+    [x] **Infrastructure**: Full Dockerization (API + PostgreSQL).
 
     [ ] Redis Integration: Planned for high-speed caching.
 
-🚀 Getting Started
+🚀 Markdown
 
-    Clone the repo:
+## 🚀 Getting Started
+
+1. **Clone the repo:**
+   ```bash
+   git clone [https://github.com/your-username/game-tracker.git](https://github.com/your-username/game-tracker.git)
+
+    Configure Environment:
+    Create a .env file in the root directory (see .env.example).
+
+    Run everything via Docker:
     Bash
 
-    git clone [https://github.com/your-username/game-tracker.git](https://github.com/your-username/game-tracker.git)
+    docker-compose up -d --build
 
-    Start PostgreSQL via Docker:
-    Bash
+    The API will be available at http://localhost:8080/swagger
 
-    docker-compose up -d
+   ```env
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+DB_PORT=5432
+JWT_KEY=
+JWT_ISSUER=
+JWT_AUDIENCE=
 
-    Update Database:
-    Bash
 
-    dotnet ef database update
-
-    Run:
-    Bash
-
-    dotnet run --project WebAPI
 
 ---
 *Note: This project is under active development. Expect breaking changes and frequent updates.*
