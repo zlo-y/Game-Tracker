@@ -32,7 +32,7 @@ public class ActivityLogController : ControllerBase
 public async Task<ActionResult<Guid>> StartActivity([FromBody] StartActivityRequest request)
 {
 
-    var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     
 
     if (string.IsNullOrEmpty(userIdClaim)) 

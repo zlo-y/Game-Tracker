@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
+using WebAPI.Extensions;
 
 
 
@@ -23,8 +24,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // 
 // Добавление сервисов для дальнейшей работы с ними!
 // 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerDocumentation();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddDbContext<AppDbContext>(options =>
