@@ -11,7 +11,7 @@
 
 ## 🏗 Архитектура и Стек
 
-* **Платформа:** .NET 8 / ASP.NET Core
+* **Платформа:** .NET 10 / ASP.NET Core
 * **Паттерны:** CQRS (MediatR), Clean Architecture
 * **Валидация:** FluentValidation (интегрирована в Pipeline MediatR)
 * **База данных:** PostgreSQL + Entity Framework Core

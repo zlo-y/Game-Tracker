@@ -12,7 +12,7 @@ The project is a demonstration of **Clean Architecture** and modern design patte
 
 ## 🏗 Architecture & Technologies
 
-* **Core Framework:** .NET 8 / ASP.NET Core
+* **Core Framework:** .NET 10 / ASP.NET Core
 * **Architectural Pattern:** Clean Architecture (Domain, Application, Infrastructure, API)
 * **Design Pattern:** CQRS via **MediatR**
 * **Validation:** **FluentValidation** integrated into the MediatR Pipeline
