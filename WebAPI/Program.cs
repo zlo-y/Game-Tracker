@@ -10,6 +10,7 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using WebAPI.Extensions;
+using Infrastructure.Extensions;
 
 
 
@@ -24,6 +25,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // 
 // Добавление сервисов для дальнейшей работы с ними!
 // 
+builder.Services.AddRedisCache(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDocumentation();

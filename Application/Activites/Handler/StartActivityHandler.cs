@@ -1,10 +1,11 @@
 using MediatR;
 using Domain;
 using Application.Common.Interfaces;
+using Application.Activities.Commands;
 
 
 
-namespace Application.Activities.Commands;
+namespace Application.Activities.Handlers;
 
 
 // Эта штука — просто почтальон. В ней нет логики, только данные от юзера.

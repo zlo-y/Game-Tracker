@@ -7,9 +7,14 @@ using AutoMapper.QueryableExtensions;
 
 
 namespace Application.Games.Queries;
-
+// 
 // Получение списка игр
-public record GetGamesQuery(string? SearchTerm = null, string? Genre = null) : IRequest<IEnumerable<GameListEntity>>;
+// Добавил интерфейс ICacheble для ускоренной работы и получения данных из кеша!
+public record GetGamesQuery(string? SearchTerm = null, string? Genre = null) : IRequest<IEnumerable<GameListEntity>>, ICacheble
+{
+    public string CacheKey => $"games-{SearchTerm ?? "all"}-{Genre ?? "all"}";
+    public TimeSpan? Expiration => TimeSpan.FromMinutes(2);
+}
 
 public class GetGamesHandler : IRequestHandler<GetGamesQuery , IEnumerable<GameListEntity>>
 {

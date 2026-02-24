@@ -1,5 +1,5 @@
 using MediatR;
 
-namespace Application.Activites.Command;
+namespace Application.Activities.Commands;
 
 public record StopActivityCommand(Guid Id , Guid UserId) : IRequest<Unit>;

@@ -2,7 +2,7 @@ using MediatR;
 using Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Activites.Command;
+namespace Application.Activities.Handlers;
 
 
 // 

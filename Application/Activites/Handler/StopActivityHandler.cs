@@ -1,8 +1,10 @@
 using MediatR;
 using Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Application.Activities.Commands;
 
-namespace Application.Activites.Command;
+
+namespace Application.Activities.Handlers;
 
 // 
 // Этот обработчик отвечает за "остановку" активности, то есть за установку EndTime для уже существующей активности.
@@ -24,12 +26,13 @@ public class StopActivityHandler : IRequestHandler<StopActivityCommand, Unit>
 
     public async Task<Unit> Handle (StopActivityCommand request, CancellationToken cancellationToken)
     {
+        var userId = _currentUserService.UserId;
         var activity = await _context.ActivityLogs
         .FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
 
         if(activity == null)
         {
-            throw new Exception("Активность не найдена");
+            throw new Exception("Акт ивность не найдена");
         }
 
         if(activity.UserId != _currentUserService.UserId)
