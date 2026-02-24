@@ -59,7 +59,7 @@ The application uses a custom request pipeline to ensure reliability:
     
     [x] **Infrastructure**: Full Dockerization (API + PostgreSQL).
 
-    [ ] Redis Integration: Planned for high-speed caching.
+    [x] Redis Integration: Planned for high-speed caching.
 
 🚀 Markdown
 
