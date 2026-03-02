@@ -39,8 +39,8 @@ public class GetGamesHandler : IRequestHandler<GetGamesQuery , IEnumerable<GameL
             query = query.Where(g => g.Genre == request.Genre);
         }
 
-        return await query
-            .ProjectTo<GameListEntity>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+        var games = await query.ToListAsync(cancellationToken);
+
+        return _mapper.Map<IEnumerable<GameListEntity>>(games);
     }
 }
